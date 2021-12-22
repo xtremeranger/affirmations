@@ -77,7 +77,10 @@
 "Each day is filled with joy.",
 "I embrace my power.	"
 ];
-		const affirmation=affirmations[Math.floor(Math.random() * affirmations.length)];
+const urlParams = new URLSearchParams(window.location.search);
+const index= (urlParams.has('i')) ? urlParams.get('i') : Math.floor(Math.random() * affirmations.length);
+
+		const affirmation=affirmations[index];
 		document.querySelector('.affirmation').textContent=affirmation;
 	</script>
 </body>
