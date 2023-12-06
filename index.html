@@ -9,6 +9,12 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
 	<style>
+		:root {
+			--color-light: #eee;
+			--color-dark: #333;
+			--background-color: var(--color-dark);
+			--foreground-color: var(--color-light);
+		}
 		html, body {
 			margin: 0;
 			padding: 0;
@@ -16,8 +22,8 @@
 		}
 
 		body {
-			background: #333;
-			color: #eee;
+			background: var(--background-color);
+			color: var(--foreground-color);
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -29,9 +35,17 @@
 			text-align: center;
 			max-width: min(90%,80rem);
 		}
+		#light_switch {
+			position: fixed;
+			top:0;left:0;
+			background: var(--foreground-color);
+			color: var(--background-color);
+			border: 0;
+		}
 	</style>
 </head>
 <body>
+	<button id="light_switch" onclick="toggleLight()">Light</button>
 	<span class="affirmation">Enabling Javascript will improve you experience</span>
 
 	<script>
@@ -76,12 +90,24 @@
 "I give myself room to grow.",
 "Each day is filled with joy.",
 "I embrace my power.	"
-];
-const urlParams = new URLSearchParams(window.location.search);
-const index= (urlParams.has('i')) ? urlParams.get('i') : Math.floor(Math.random() * affirmations.length);
+		];
+		const urlParams = new URLSearchParams(window.location.search);
+		const index= (urlParams.has('i')) ? urlParams.get('i') : Math.floor(Math.random() * affirmations.length);
 
 		const affirmation=affirmations[index];
 		document.querySelector('.affirmation').textContent=affirmation;
+
+		var light=false;
+		function toggleLight() {
+			light=!light;
+			const label=(light)?"Dark":"Light";
+			const bg_color=(light)?"var(--color-light)":"var(--color-dark)";
+			const fg_color=(light)?"var(--color-dark)":"var(--color-light)";
+			
+			document.documentElement.style.setProperty('--background-color', bg_color);
+			document.documentElement.style.setProperty('--foreground-color', fg_color);
+			document.getElementById('light_switch').innerHTML=label;
+		}
 	</script>
 </body>
 </html>
